@@ -5,6 +5,12 @@
 hy2py3repl2 () {
 	rlwrap sh -c 'while read line; do pycode=`echo "$line" | hy2py3`; echo "翻译:"$pycode; echo "执行:"; python -c "print($pycode)"; echo "------------" ; done'
 }
+#  ------------
+#  (-> 1 (+ 2) (- 1) (/ 4))
+#  翻译:(1 + 2 - 1) / 4
+#  执行:
+#  0.5
+#  ------------
 ```
 ##### import
 
@@ -112,6 +118,16 @@ test_labels ;;=> array([7, 2, 1, ..., 4, 5, 6], dtype=uint8)
 
 (/ (train_images.astype "float32") 255)
 
+```
+
+##### np.array张量0D~3D
+
+```clojure
+(import [numpy :as np])
+(-> 12 np.array (. ndim)) ;; 0D
+(-> [1 3 5 8] np.array (. ndim)) ;;=> 1D
+(-> [[1 3] [5 8]] np.array (. ndim)) ;;=> 2D
+(-> [[[1 2] [3 5]] [[9 7] [6 4]]] np.array (. ndim)) ;;=> 3D
 ```
 
 ##### seq2seq model
