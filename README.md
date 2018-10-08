@@ -66,8 +66,38 @@ test_labels ;;=> array([7, 2, 1, ..., 4, 5, 6], dtype=uint8)
 ;; 最后一层是一个14002路的softmax层, 返回一个由14002个概率值(总和为1)组成的数组,
 ;; 每个概率值表示 当前代码向量 属于14002个句向量类别中某一个的概率
 ((Dense 14002 :activation "softmax" :name "Final-Output-Dense"))
+(fn [data]
+  (setv (, dec_bn2 _) data)
+  ((model_get_layer "Final-Output-Dense") dec_bn2))
 ```
 
+##### compile
+
+```clojure
+;; sparse_categorical_crossentropy 是整数(sparse)标签应该遵循分类编码
+(seq2seq_Model.compile :optimizer (optimizers.Nadam :lr 0.00005)
+                       :loss "sparse_categorical_crossentropy")
+```
+
+##### predict黑盒映射
+
+```clojure
+(encoder_model.predict raw_tokenized)
+(decoder_model.predict [state_value, encoding])
+```
+##### fit拟合数据
+
+```clojure
+(seq2seq_Model.fit [encoder_input_data decoder_input_data]
+                   (np.expand_dims decoder_target_data, -1))
+```
+
+##### evaluate
+
+```clojure
+(setv (, test_loss test_acc) (network.evaluate test_images test_labels))
+;;=> test_acc: 0.9785
+```
 ##### seq2seq model
 
 ```clojure
