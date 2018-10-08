@@ -1,4 +1,4 @@
-# jim-emacs-fun-hylisp-keras
+# jim-emacs-fun-hylisp-keras, 用函数式LISP来表达问题,问题变得清晰很多
 
 ##### hy2py3repl2
 ```bash
