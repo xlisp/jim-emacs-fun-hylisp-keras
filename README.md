@@ -36,8 +36,7 @@
                            num_decoder_tokens]
   (setv
    ;; Encoder Model
-   encoder_inputs (Input :shape (, encoder_seq_len)
-                         :name "Encoder-Input")
+   encoder_inputs (Input :shape (, encoder_seq_len) :name "Encoder-Input")
    seq2seq_encoder_out
    (->> encoder_inputs
         ((Embedding num_encoder_tokens word_emb_dim :name "Body-Word-Embedding" :mask_zero False))
@@ -57,16 +56,12 @@
         ((fn [dec_bn]
            (setv (, decoder_gru_output _)
                  ((GRU hidden_state_dim :return_state True :return_sequences True :name "Decoder-GRU" :dropout 0.5)
-                  dec_bn
-                  :initial_state seq2seq_encoder_out)
-                 )
-           decoder_gru_output
-           ))
+                  dec_bn :initial_state seq2seq_encoder_out))
+           decoder_gru_output))
         ((BatchNormalization :name "Decoder-Batchnorm-2"))
         ((Dense num_decoder_tokens :activation "softmax" :name "Final-Output-Dense"))
         ((fn [decoder_outputs]
            (Model [encoder_inputs decoder_inputs] decoder_outputs))))
-
    )
   seq2seq_Model
   )
@@ -81,8 +76,7 @@
   (setv model_get_layer (fn [name] (-> model (.get_layer name)))
         decoder_inputs (. (model_get_layer "Decoder-Input") input)
         gru_inference_state_input
-        (Input :shape
-               (, (get (. ((. model get_layer) "Encoder-Model") output_shape) -1))
+        (Input :shape (, (get (. ((. model get_layer) "Encoder-Model") output_shape) -1))
                :name "hidden_state_input"))
   (setv decoder_model
         (-> decoder_inputs
