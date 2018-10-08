@@ -41,6 +41,24 @@ test_labels ;;=> array([7, 2, 1, ..., 4, 5, 6], dtype=uint8)
 
 ```
 
+##### get_layer
+
+```clojure
+;; 拆出来层当模型来用,黑盒映射的白盒化
+(setv model_get_layer (fn [name] (-> model (.get_layer name))))
+```
+
+##### 步步为营保存层,层和模型嫁接迁移
+
+```clojure
+;; 保存层权重和numpy每一步结果,模型的每次结果
+
+(np.save "max_emb_dim500_v2.npy" max_hs)
+
+(seq2seq_Model.save "code_summary_seq2seq_model.h5")
+(load_model "code_summary_seq2seq_model.h5")
+```
+
 ##### seq2seq model
 
 ```clojure
