@@ -124,10 +124,10 @@ test_labels ;;=> array([7, 2, 1, ..., 4, 5, 6], dtype=uint8)
 
 ```clojure
 (import [numpy :as np])
-(-> 12 np.array (. ndim)) ;; 0D
-(-> [1 3 5 8] np.array (. ndim)) ;;=> 1D
-(-> [[1 3] [5 8]] np.array (. ndim)) ;;=> 2D
-(-> [[[1 2] [3 5]] [[9 7] [6 4]]] np.array (. ndim)) ;;=> 3D
+(-> 12 np.array (. ndim)) ;; 0D, ()
+(-> [1 3 5 8] np.array (. ndim)) ;;=> 1D, (4,)
+(-> [[1 3] [5 8]] np.array (. ndim)) ;;=> 2D, (2, 2)
+(-> [[[1 2] [3 5]] [[9 7] [6 4]]] np.array (. ndim)) ;;=> 3D , (2, 2, 2)
 ```
 
 ##### seq2seq model
