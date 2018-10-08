@@ -2,7 +2,7 @@
 
 ##### import
 
-```lisp
+```clojure
 (import
  [tensorflow :as tf]
  [keras [backend :as K]]
@@ -12,7 +12,7 @@
 
 ##### Input
 
-```lisp
+```clojure
 (Input :shape (, None) :name "Decoder-Input")
 ;;=> <tf.Tensor 'Decoder-Input_2:0' shape=(?, ?) dtype=float32>
 (Input :shape (, 11) :name "Encoder-Input")
@@ -21,13 +21,13 @@
 
 ##### summary
 
-```lisp
+```clojure
 ((. decoder_model summary))
 ```
 
 ##### seq2seq model
 
-```lisp
+```clojure
 
 (defn build_seq2seq_model [word_emb_dim
                            hidden_state_dim
@@ -75,7 +75,7 @@
 
 ##### extract model
 
-```lisp
+```clojure
 (defn extract_decoder_model [model]
   ;; Reconstruct the input into the decoder
   (setv model_get_layer (fn [name] (-> model (.get_layer name)))
