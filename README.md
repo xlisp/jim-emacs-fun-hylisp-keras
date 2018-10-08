@@ -1,5 +1,11 @@
 # jim-emacs-fun-hylisp-keras
 
+##### hy2py3repl2
+```bash
+hy2py3repl2 () {
+	rlwrap sh -c 'while read line; do pycode=`echo "$line" | hy2py3`; echo "翻译:"$pycode; echo "执行:"; python -c "print($pycode)"; echo "------------" ; done'
+}
+```
 ##### import
 
 ```clojure
@@ -98,6 +104,16 @@ test_labels ;;=> array([7, 2, 1, ..., 4, 5, 6], dtype=uint8)
 (setv (, test_loss test_acc) (network.evaluate test_images test_labels))
 ;;=> test_acc: 0.9785
 ```
+
+##### reshape & astype
+
+```clojure
+(. (train_images.reshape (, 60000 (* 28 28))) shape) ;;=> (60000, 784)
+
+(/ (train_images.astype "float32") 255)
+
+```
+
 ##### seq2seq model
 
 ```clojure
