@@ -130,6 +130,16 @@ test_labels ;;=> array([7, 2, 1, ..., 4, 5, 6], dtype=uint8)
 (-> [[[1 2] [3 5]] [[9 7] [6 4]]] np.array (. ndim)) ;;=> 3D , (2, 2, 2)
 ```
 
+##### slice张量
+```clojure
+(-> train_images (get 4) (. shape)) ;;=> (28, 28)
+(-> train_images (get (slice 10 100)) (. shape)) ;;=> (90, 28, 28)
+;; 所有图像右下角选出14x14的像素区域
+(-> train_images (get [(slice None) (slice 14 None) (slice 14 None)]) (. shape)) ;;=> (60000, 14, 14)
+;; 所有图像中心裁剪出14x14的像素区域
+(-> train_images (get [(slice None) (slice 7 -7) (slice 7 -7)]) (. shape)) ;;=> (60000, 14, 14)
+
+```
 ##### seq2seq model
 
 ```clojure
