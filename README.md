@@ -19,7 +19,7 @@ hy2py3repl2 () {
  [tensorflow :as tf]
  [keras [backend :as K]]
  [keras.models [Model load_model]]
- [keras.layers [Input LSTM GRU Dense Embedding Bidirectional BatchNormalization]])
+ [keras.layers [Input LSTM GRU Dense Embedding Bidirectional BatchNormalization Lambda]])
 ```
 
 ##### Input
@@ -58,6 +58,27 @@ test_labels ;;=> array([7, 2, 1, ..., 4, 5, 6], dtype=uint8)
 ```clojure
 ;; 拆出来层当模型来用,黑盒映射的白盒化
 (setv model_get_layer (fn [name] (-> model (.get_layer name))))
+
+;;添加一个 x -> x^2 层
+(model.add (Lambda (fn [x] (** x 2))))
+
+(** (np.array [[[1 8] [3 5]] [[9 7] [6 4]]]) 2)
+;; => array([[[ 1, 64],
+;;         [ 9, 25]],
+;;        [[81, 49],
+;;         [36, 16]]])
+
+(K.eval
+ ((Lambda (fn [x] (** x 2)))
+  (K.variable
+   (np.array [[[1 8] [3 5]] [[9 7] [6 4]]]))))
+;;=> <tf.Tensor 'lambda_8/pow:0' shape=(2, 2, 2) dtype=float32>
+;;K.eval之后=>
+;; array([[[  1.,  64.],
+;;        [  9.,  25.]],
+;;       [[ 81.,  49.],
+;;        [ 36.,  16.]]], dtype=float32)
+
 ```
 
 ##### 步步为营保存层,层和模型嫁接迁移
@@ -138,6 +159,25 @@ test_labels ;;=> array([7, 2, 1, ..., 4, 5, 6], dtype=uint8)
 (-> train_images (get [(slice None) (slice 14 None) (slice 14 None)]) (. shape)) ;;=> (60000, 14, 14)
 ;; 所有图像中心裁剪出14x14的像素区域
 (-> train_images (get [(slice None) (slice 7 -7) (slice 7 -7)]) (. shape)) ;;=> (60000, 14, 14)
+
+```
+##### 张量运算
+* relu & add
+```clojure
+(K.eval
+ (K.relu (np.array [[[1 8] [3 5]] [[9 7] [6 4]]])
+         :alpha 0.0 :max_value 5))
+;;=> <tf.Tensor 'Relu:0' shape=(2, 2, 2) dtype=int64>
+;;K.eval => array([[[1, 5],
+;;        [3, 5]],
+;;       [[5, 5],
+;;        [5, 4]]])
+
+(np.maximum (np.array [[[1 8] [3 5]] [[9 7] [6 4]]]) 0.0)
+;;array([[[ 1.,  8.],
+;;        [ 3.,  5.]],
+;;       [[ 9.,  7.],
+;;        [ 6.,  4.]]])
 
 ```
 ##### seq2seq model
