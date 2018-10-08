@@ -59,6 +59,15 @@ test_labels ;;=> array([7, 2, 1, ..., 4, 5, 6], dtype=uint8)
 (load_model "code_summary_seq2seq_model.h5")
 ```
 
+##### Dense softmax
+
+```clojure
+;; 密集连接(全连接):
+;; 最后一层是一个14002路的softmax层, 返回一个由14002个概率值(总和为1)组成的数组,
+;; 每个概率值表示 当前代码向量 属于14002个句向量类别中某一个的概率
+((Dense 14002 :activation "softmax" :name "Final-Output-Dense"))
+```
+
 ##### seq2seq model
 
 ```clojure
