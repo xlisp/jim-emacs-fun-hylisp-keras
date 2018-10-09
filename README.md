@@ -217,7 +217,7 @@ test_labels ;;=> array([7, 2, 1, ..., 4, 5, 6], dtype=uint8)
 (-> train_images (get [(slice None) (slice 7 -7) (slice 7 -7)]) (. shape)) ;;=> (60000, 14, 14)
 
 ```
-##### 张量运算
+##### 张量运算 AND OR (like 集合运算)
 * 逐元素relu & add运算
 ```clojure
 (K.eval
