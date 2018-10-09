@@ -327,7 +327,13 @@ test_labels ;;=> array([7, 2, 1, ..., 4, 5, 6], dtype=uint8)
 ```clojure
 
 ```
-
+##### 基于梯度的优化
+```clojure
+;; W权重(weight,可训练参数: kernel)和b偏置(biase属性)是张量为该层的属性
+(K.relu (+ b (K.dot W input)))
+;; 1. W权重由目标函数loss去更新
+;; 2. 在训练样本上运行此网络层(前向传播),得到预测值,与原始值对比
+```
 ### Examples实例对比
 
 ##### seq2seq model
