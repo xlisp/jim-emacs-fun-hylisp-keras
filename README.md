@@ -3,6 +3,32 @@
 * 用函数式LISP来表达问题,问题变得清晰很多
 * 用李小龙和乔布斯的哲学推导吸引Hack计算代码: 首先你是个哲学家,然后才是一个Lisp程序员
 
+- [jim-emacs-fun-hylisp-keras 我的大脑从来不记忆公式,只是记忆书上不存在的Lisp,将哲学保存到每一个Lisp原子里面](#jim-emacs-fun-hylisp-keras-%E6%88%91%E7%9A%84%E5%A4%A7%E8%84%91%E4%BB%8E%E6%9D%A5%E4%B8%8D%E8%AE%B0%E5%BF%86%E5%85%AC%E5%BC%8F%E5%8F%AA%E6%98%AF%E8%AE%B0%E5%BF%86%E4%B9%A6%E4%B8%8A%E4%B8%8D%E5%AD%98%E5%9C%A8%E7%9A%84lisp%E5%B0%86%E5%93%B2%E5%AD%A6%E4%BF%9D%E5%AD%98%E5%88%B0%E6%AF%8F%E4%B8%80%E4%B8%AAlisp%E5%8E%9F%E5%AD%90%E9%87%8C%E9%9D%A2)
+    - [Elisp化](#elisp%E5%8C%96)
+        - [hy2py3repl2](#hy2py3repl2)
+    - [Hylisp function programming list](#hylisp-function-programming-list)
+        - [import](#import)
+        - [Input](#input)
+        - [summary](#summary)
+        - [shape](#shape)
+        - [神经网络的黑盒不黑get_layer & layers: 就像纯函数一样调用每个层或模型或映射或矩阵或函数](#%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E7%9A%84%E9%BB%91%E7%9B%92%E4%B8%8D%E9%BB%91get_layer--layers-%E5%B0%B1%E5%83%8F%E7%BA%AF%E5%87%BD%E6%95%B0%E4%B8%80%E6%A0%B7%E8%B0%83%E7%94%A8%E6%AF%8F%E4%B8%AA%E5%B1%82%E6%88%96%E6%A8%A1%E5%9E%8B%E6%88%96%E6%98%A0%E5%B0%84%E6%88%96%E7%9F%A9%E9%98%B5%E6%88%96%E5%87%BD%E6%95%B0)
+        - [步步为营保存层,层和模型嫁接迁移](#%E6%AD%A5%E6%AD%A5%E4%B8%BA%E8%90%A5%E4%BF%9D%E5%AD%98%E5%B1%82%E5%B1%82%E5%92%8C%E6%A8%A1%E5%9E%8B%E5%AB%81%E6%8E%A5%E8%BF%81%E7%A7%BB)
+        - [Dense softmax](#dense-softmax)
+        - [compile](#compile)
+        - [optimizer](#optimizer)
+        - [predict黑盒映射](#predict%E9%BB%91%E7%9B%92%E6%98%A0%E5%B0%84)
+        - [fit拟合数据](#fit%E6%8B%9F%E5%90%88%E6%95%B0%E6%8D%AE)
+        - [evaluate](#evaluate)
+        - [get_weights & set_weights & load_weights & save_weights](#get_weights--set_weights--load_weights--save_weights)
+        - [np.array张量0D~3D](#nparray%E5%BC%A0%E9%87%8F0d3d)
+        - [slice张量](#slice%E5%BC%A0%E9%87%8F)
+        - [张量运算 AND OR (like 集合运算)](#%E5%BC%A0%E9%87%8F%E8%BF%90%E7%AE%97-and-or-like-%E9%9B%86%E5%90%88%E8%BF%90%E7%AE%97)
+        - [分布式表示最大的问题在于: 连接connect的问题,连接多个层的问题,充分利用各种细胞的简单优势计算](#%E5%88%86%E5%B8%83%E5%BC%8F%E8%A1%A8%E7%A4%BA%E6%9C%80%E5%A4%A7%E7%9A%84%E9%97%AE%E9%A2%98%E5%9C%A8%E4%BA%8E-%E8%BF%9E%E6%8E%A5connect%E7%9A%84%E9%97%AE%E9%A2%98%E8%BF%9E%E6%8E%A5%E5%A4%9A%E4%B8%AA%E5%B1%82%E7%9A%84%E9%97%AE%E9%A2%98%E5%85%85%E5%88%86%E5%88%A9%E7%94%A8%E5%90%84%E7%A7%8D%E7%BB%86%E8%83%9E%E7%9A%84%E7%AE%80%E5%8D%95%E4%BC%98%E5%8A%BF%E8%AE%A1%E7%AE%97)
+    - [Examples实例对比](#examples%E5%AE%9E%E4%BE%8B%E5%AF%B9%E6%AF%94)
+        - [seq2seq model](#seq2seq-model)
+        - [extract model](#extract-model)
+
+
 ### Elisp化
 
 ##### hy2py3repl2
