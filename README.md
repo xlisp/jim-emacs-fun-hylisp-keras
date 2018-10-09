@@ -334,6 +334,14 @@ test_labels ;;=> array([7, 2, 1, ..., 4, 5, 6], dtype=uint8)
 ;; 1. W权重由目标函数loss去更新
 ;; 2. 在训练样本上运行此网络层(前向传播),得到预测值,与原始值对比
 ```
+##### 斜率->导数
+```clojure
+(setv (f x) y)
+(setv (f x epsilon-x) (+ y epsilon-y))
+(setv epsilon-y (* a epsilon-x)) ;;f近似为a的线性函数=>
+(setv (f x epsilon-x) (+ y (* a epsilon-x)))
+(setv (f_derivative x) a)
+```
 ### Examples实例对比
 
 ##### seq2seq model
