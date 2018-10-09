@@ -56,8 +56,8 @@ test_labels ;;=> array([7, 2, 1, ..., 4, 5, 6], dtype=uint8)
 
 ```
 
-##### get_layer
-
+##### 神经网络的黑盒不黑get_layer & layers
+* get_layer
 ```clojure
 ;; 拆出来层当模型来用,黑盒映射的白盒化
 (setv model_get_layer (fn [name] (-> model (.get_layer name))))
@@ -81,11 +81,35 @@ test_labels ;;=> array([7, 2, 1, ..., 4, 5, 6], dtype=uint8)
 ;;        [  9.,  25.]],
 ;;       [[ 81.,  49.],
 ;;        [ 36.,  16.]]], dtype=float32)
-
-;;;;;;;;;;;;;;;;;;;;;
-
 ```
+* layers
+```clojure
+(import [keras.applications.vgg16 [VGG16]]
+        [keras.models [Model]]
+        [keras.preprocessing [image]]
+        [keras.applications.vgg16 [preprocess_input]]
+        [numpy :as np])
 
+;; github.com/fchollet/deep-learning-models/releases/download/v0.1/vgg16_weights_tf_dim_ordering_tf_kernels.h5
+(setv base_model (VGG16 :weights "imagenet" :include_top True))
+
+;; 先打印所有的layers出来看,以便get_layer单独取出层
+(for [(, i layer) (enumerate base_model.layers)]
+  (print i ": " layer.name ", " layer.input_shape ", " layer.output_shape))
+;; 0 :  input_1 ,  (None, 224, 224, 3) ,  (None, 224, 224, 3)
+;; 1 :  block1_conv1 ,  (None, 224, 224, 3) ,  (None, 224, 224, 64)
+;; ...
+;; 21 :  fc2 ,  (None, 4096) ,  (None, 4096)
+;; 22 :  predictions ,  (None, 4096) ,  (None, 1000)
+
+;;keras get weights of dense layer
+(setv (, weights biases)
+      (-> base_model (.get_layer "fc2") .get_weights))
+;; weights=> weights.shape (4096, 4096)
+;; biases=> biases.shape (4096,)
+;; array([ 0.64710701,  0.48036072,  0.58551109, ...,  0.50245267,
+;;         0.41782504,  0.66609925], dtype=float32)
+```
 ##### 步步为营保存层,层和模型嫁接迁移
 
 ```clojure
@@ -141,7 +165,20 @@ test_labels ;;=> array([7, 2, 1, ..., 4, 5, 6], dtype=uint8)
 (setv (, test_loss test_acc) (network.evaluate test_images test_labels))
 ;;=> test_acc: 0.9785
 ```
-
+##### get_weights & set_weights & load_weights & save_weights
+```clojure
+(->
+ (tf.placeholder tf.float32 [None 10] :name "input_x")
+ ;; OR: (K.placeholder [None 10] :name "input_x")
+ ((fn [input_x]
+    (setv dense1 (Dense 10 :activation K.relu))
+    (dense1 input_x) ;;=> <tf.Tensor 'dense_2/Relu:0' shape=(?, 10) dtype=float32>
+    dense1))
+ (.get_weights)
+ (first)
+ len
+ ) ;;=> 10
+```
 ##### np.array张量0D~3D
 
 ```clojure
@@ -228,6 +265,10 @@ test_labels ;;=> array([7, 2, 1, ..., 4, 5, 6], dtype=uint8)
 * expand_dims
 ```clojure
 (np.expand_dims im :axis 0)
+```
+* squeeze
+```clojure
+(np.squeeze out)
 ```
 ##### seq2seq model
 
