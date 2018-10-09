@@ -58,7 +58,8 @@ hy2py3repl2 () {
  [keras [backend :as K]]
  [keras.models [Model load_model]]
  [numpy :as np]
- [keras.layers [Input LSTM GRU Dense Embedding Bidirectional BatchNormalization Lambda]])
+ [keras [losses]]
+ [keras.layers [Input LSTM GRU Dense Embedding Bidirectional BatchNormalization Lambda Activation]])
 ```
 
 ##### Input
@@ -170,6 +171,17 @@ test_labels ;;=> array([7, 2, 1, ..., 4, 5, 6], dtype=uint8)
 ![](./层的本质是函数.png)
 
 ```clojure
+(setv inputs (Input :shape (, 784)))
+(->
+ inputs
+ ((Dense 32))
+ ((Activation K.sigmoid))
+ ((Dense 10))
+ ((Activation K.softmax))
+ ((fn [predictions]
+    (Model :inputs inputs :outputs predictions)))
+ (.compile :loss keras.losses.categorical_crossentropy :optimizer (keras.optimizers.Adam)))
+
 ```
 
 ##### 步步为营保存层,层和模型嫁接迁移
