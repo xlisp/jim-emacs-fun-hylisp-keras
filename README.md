@@ -200,13 +200,12 @@ test_labels ;;=> array([7, 2, 1, ..., 4, 5, 6], dtype=uint8)
 (. (train_images.reshape (, 60000 (* 28 28))) shape) ;;=> (60000, 784)
 (/ (train_images.astype "float32") 255)
 
-((->
-  [[0. 1.]
-   [2. 3.]
-   [4. 5.]]
-  np.array
-  (. reshape))
- (, 2 3))
+(->
+ [[0. 1.]
+  [2. 3.]
+  [4. 5.]]
+ np.array
+ (.reshape (, 2 3)))
 ;; array([[ 0.,  1.,  2.],
 ;;        [ 3.,  4.,  5.]])
 
