@@ -265,7 +265,7 @@ test_labels ;;=> array([7, 2, 1, ..., 4, 5, 6], dtype=uint8)
   (setv model_get_layer (fn [name] (-> model (.get_layer name)))
         decoder_inputs (. (model_get_layer "Decoder-Input") input)
         gru_inference_state_input
-        (Input :shape (, (get (. ((. model get_layer) "Encoder-Model") output_shape) -1))
+        (Input :shape (, (get (. (model_get_layer "Encoder-Model") output_shape) -1))
                :name "hidden_state_input"))
   (setv decoder_model
         (-> decoder_inputs
