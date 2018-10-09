@@ -334,13 +334,29 @@ test_labels ;;=> array([7, 2, 1, ..., 4, 5, 6], dtype=uint8)
 ;; 1. W权重由目标函数loss去更新
 ;; 2. 在训练样本上运行此网络层(前向传播),得到预测值,与原始值对比
 ```
-##### 斜率->导数
+##### 斜率->导数->梯度(张量运算的导数)
+* 斜率->导数
 ```clojure
 (setv (f x) y)
 (setv (f x epsilon-x) (+ y epsilon-y))
 (setv epsilon-y (* a epsilon-x)) ;;f近似为a的线性函数=>
 (setv (f x epsilon-x) (+ y (* a epsilon-x)))
 (setv (f_derivative x) a)
+```
+* 梯度gradient
+```clojure
+;; *采用代码实例化来表达抽象公式*
+(setv y-pred (K.dot W x))
+(setv loss-value (keras.losses.categorical_crossentropy y-pred y))
+(setv loss-value (f W))
+(setv W1 (- W0 (* step ((gradient f) W0))))
+;; 1. W1是W的当前值
+;; 2. 张量((gradient f) W0)是在W0点的导数,形状和W相同: 函数(setv (f W) loss-value)在W0的导数,或可以表示(f W)在W0附近曲率的张量, 只是W0附近曲率的近似值
+;; 3. W1是W0减去损失值: (- W0 (* step ((gradient f) W0))) =?> (- W0 loss-value)
+```
+##### 随机梯度SGD
+```clojure
+
 ```
 ### Examples实例对比
 
