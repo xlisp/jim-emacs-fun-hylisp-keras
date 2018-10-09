@@ -57,7 +57,7 @@ test_labels ;;=> array([7, 2, 1, ..., 4, 5, 6], dtype=uint8)
 
 ```
 
-##### 神经网络的黑盒不黑get_layer & layers
+##### 神经网络的黑盒不黑get_layer & layers: 就像纯函数一样调用每个层或模型或映射或矩阵或函数
 * get_layer
 ```clojure
 ;; 拆出来层当模型来用,黑盒映射的白盒化
