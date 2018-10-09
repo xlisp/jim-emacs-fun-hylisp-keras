@@ -3,6 +3,8 @@
 * 用函数式LISP来表达问题,问题变得清晰很多
 * 用李小龙和乔布斯的哲学推导吸引Hack计算代码: 首先你是个哲学家,然后才是一个Lisp程序员
 
+### Elisp化
+
 ##### hy2py3repl2
 ```bash
 hy2py3repl2 () {
@@ -15,6 +17,9 @@ hy2py3repl2 () {
 #  0.5
 #  ------------
 ```
+
+### Hylisp function programming list
+
 ##### import
 
 ```clojure
@@ -296,6 +301,9 @@ test_labels ;;=> array([7, 2, 1, ..., 4, 5, 6], dtype=uint8)
 ```clojure
 
 ```
+
+### Examples实例对比
+
 ##### seq2seq model
 
 ```clojure
