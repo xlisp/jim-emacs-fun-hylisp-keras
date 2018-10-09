@@ -82,6 +82,8 @@ test_labels ;;=> array([7, 2, 1, ..., 4, 5, 6], dtype=uint8)
 ;;       [[ 81.,  49.],
 ;;        [ 36.,  16.]]], dtype=float32)
 
+;;;;;;;;;;;;;;;;;;;;;
+
 ```
 
 ##### 步步为营保存层,层和模型嫁接迁移
@@ -93,6 +95,8 @@ test_labels ;;=> array([7, 2, 1, ..., 4, 5, 6], dtype=uint8)
 
 (seq2seq_Model.save "code_summary_seq2seq_model.h5")
 (load_model "code_summary_seq2seq_model.h5")
+
+(model.load_weights weights_path)
 ```
 
 ##### Dense softmax
@@ -114,7 +118,10 @@ test_labels ;;=> array([7, 2, 1, ..., 4, 5, 6], dtype=uint8)
 (seq2seq_Model.compile :optimizer (optimizers.Nadam :lr 0.00005)
                        :loss "sparse_categorical_crossentropy")
 ```
-
+##### optimizer
+```clojure
+(model.compile :optimizer (SGD) :loss keras.losses.categorical_crossentropy)
+```
 ##### predict黑盒映射
 
 ```clojure
@@ -213,6 +220,14 @@ test_labels ;;=> array([7, 2, 1, ..., 4, 5, 6], dtype=uint8)
     np.transpose
     (. shape))
 ;; (200, 300)
+```
+* argmax
+```clojure
+(np.argmax (model.predict im))
+```
+* expand_dims
+```clojure
+(np.expand_dims im :axis 0)
 ```
 ##### seq2seq model
 
