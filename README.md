@@ -110,6 +110,7 @@ test_labels ;;=> array([7, 2, 1, ..., 4, 5, 6], dtype=uint8)
 ;; array([ 0.64710701,  0.48036072,  0.58551109, ...,  0.50245267,
 ;;         0.41782504,  0.66609925], dtype=float32)
 
+;; 单个层的特征提取predict
 (setv mmodel (Model :input base_model.input ;;<tf.Tensor 'input_2:0' shape=(?, 224, 224, 3) dtype=float32>
                     :output (-> base_model (.get_layer "block4_pool") (. output)) ;;<tf.Tensor 'block4_pool_1/MaxPool:0' shape=(?, 14, 14, 512) dtype=float32>
                     ))
