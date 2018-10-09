@@ -19,6 +19,7 @@ hy2py3repl2 () {
  [tensorflow :as tf]
  [keras [backend :as K]]
  [keras.models [Model load_model]]
+ [numpy :as np]
  [keras.layers [Input LSTM GRU Dense Embedding Bidirectional BatchNormalization Lambda]])
 ```
 
@@ -132,15 +133,6 @@ test_labels ;;=> array([7, 2, 1, ..., 4, 5, 6], dtype=uint8)
 ;;=> test_acc: 0.9785
 ```
 
-##### reshape & astype
-
-```clojure
-(. (train_images.reshape (, 60000 (* 28 28))) shape) ;;=> (60000, 784)
-
-(/ (train_images.astype "float32") 255)
-
-```
-
 ##### np.array张量0D~3D
 
 ```clojure
@@ -162,7 +154,7 @@ test_labels ;;=> array([7, 2, 1, ..., 4, 5, 6], dtype=uint8)
 
 ```
 ##### 张量运算
-* relu & add
+* 逐元素relu & add运算
 ```clojure
 (K.eval
  (K.relu (np.array [[[1 8] [3 5]] [[9 7] [6 4]]])
@@ -173,12 +165,53 @@ test_labels ;;=> array([7, 2, 1, ..., 4, 5, 6], dtype=uint8)
 ;;       [[5, 5],
 ;;        [5, 4]]])
 
+(np.add (np.array [[[1 8] [3 5]] [[9 7] [6 4]]])
+        (np.array [[[2 8] [5 2]] [[9 8] [6 4]]]))
+;; array([[[ 3, 16],
+;;         [ 8,  7]],
+;;        [[18, 15],
+;;         [12,  8]]])
+```
+* maximum广播
+```clojure
 (np.maximum (np.array [[[1 8] [3 5]] [[9 7] [6 4]]]) 0.0)
 ;;array([[[ 1.,  8.],
 ;;        [ 3.,  5.]],
 ;;       [[ 9.,  7.],
 ;;        [ 6.,  4.]]])
+```
+* dot点积
+```clojure
+(np.dot (np.array [[[1 8] [3 5]] [[9 7] [6 4]]])
+        (np.array [[[2 8] [5 2]] [[9 8] [6 4]]]))
+;; array([[[[ 42,  24],
+;;          [ 57,  40]],
+;;         [[ 31,  34],
+;;          [ 57,  44]]],
+;;        [[[ 53,  86],
+;;          [123, 100]],
+;;         [[ 32,  56],
+;;          [ 78,  64]]]])
+```
+* reshape张量编写
+```clojure
+(. (train_images.reshape (, 60000 (* 28 28))) shape) ;;=> (60000, 784)
+(/ (train_images.astype "float32") 255)
 
+((->
+  [[0. 1.]
+   [2. 3.]
+   [4. 5.]]
+  np.array
+  (. reshape))
+ (, 2 3))
+;; array([[ 0.,  1.,  2.],
+;;        [ 3.,  4.,  5.]])
+
+(-> (np.zeros (, 300 200))
+    np.transpose
+    (. shape))
+;; (200, 300)
 ```
 ##### seq2seq model
 
