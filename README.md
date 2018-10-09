@@ -1,4 +1,4 @@
-# jim-emacs-fun-hylisp-keras 我的大脑从来不记忆公式,只是记忆书上不存在的Lisp
+# jim-emacs-fun-hylisp-keras 我的大脑从来不记忆公式,只是记忆书上不存在的Lisp,将哲学保存到每一个Lisp原子里面
 * 从Hack计算代码到计算论文
 * 用函数式LISP来表达问题,问题变得清晰很多
 * 用李小龙和乔布斯的哲学推导吸引Hack计算代码: 首先你是个哲学家,然后才是一个Lisp程序员
@@ -20,6 +20,7 @@ hy2py3repl2 () {
 ```clojure
 (import
  [tensorflow :as tf]
+ keras
  [keras [backend :as K]]
  [keras.models [Model load_model]]
  [numpy :as np]
@@ -148,7 +149,8 @@ test_labels ;;=> array([7, 2, 1, ..., 4, 5, 6], dtype=uint8)
 ;; 密集连接(全连接):
 ;; 最后一层是一个14002路的softmax层, 返回一个由14002个概率值(总和为1)组成的数组,
 ;; 每个概率值表示 当前代码向量 属于14002个句向量类别中某一个的概率
-((Dense 14002 :activation "softmax" :name "Final-Output-Dense"))
+;; keras.activations.softmax or K.softmax
+(Dense 14002 :activation keras.activations.softmax :name "Final-Output-Dense")
 (fn [data]
   (setv (, dec_bn2 _) data)
   ((model_get_layer "Final-Output-Dense") dec_bn2))
