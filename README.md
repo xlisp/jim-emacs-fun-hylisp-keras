@@ -164,6 +164,14 @@ test_labels ;;=> array([7, 2, 1, ..., 4, 5, 6], dtype=uint8)
 (-> features first first (. shape)) ;;=> (14, 512)
 
 ```
+
+* 层的本质是函数
+
+![](./层的本质是函数.png)
+
+```clojure
+```
+
 ##### 步步为营保存层,层和模型嫁接迁移
 
 ```clojure
