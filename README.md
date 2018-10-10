@@ -374,6 +374,7 @@ test_labels ;;=> array([7, 2, 1, ..., 4, 5, 6], dtype=uint8)
 
 (-> a
     (np.argpartition 6)
+    ;; or (np.argpartition :kth 6)
     ((fn [ids] (get a ids)))) ;;=> array([0, 0, 3, 3, 4, 4, 4, 9, 6, 9])
 
 ;;Top5
@@ -381,7 +382,6 @@ test_labels ;;=> array([7, 2, 1, ..., 4, 5, 6], dtype=uint8)
     (np.argpartition -5)
     (get (slice -5 None))
     ((fn [ids] (get a ids)))) ;;=> array([4, 4, 9, 6, 9])
-
 ```
 ##### 夹角余弦Cosine
 
