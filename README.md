@@ -345,14 +345,18 @@ test_labels ;;=> array([7, 2, 1, ..., 4, 5, 6], dtype=uint8)
 ```clojure
 (np.squeeze out)
 ```
+
 ##### 夹角余弦Cosine
+
+![](./cosine_similarity.svg)
+
 ```clojure
 (setv vector1 (np.array [1 2 3])
       vector2 (np.array [4 5 6]))
 
 (np.divide
  (np.dot vector1 vector2)
- (* (np.linalg.norm vector1) (np.linalg.norm vector2)))
+ (np.multiply (np.linalg.norm vector1) (np.linalg.norm vector2)))
 ;;=> 0.97463184619707621
 
 ```
