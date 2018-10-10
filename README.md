@@ -354,9 +354,25 @@ test_labels ;;=> array([7, 2, 1, ..., 4, 5, 6], dtype=uint8)
 ```clojure
 (np.negative [1. -1.]) ;;=> array([-1.,  1.])
 ```
-* expand_dims
+* expand_dims在第'axis'维，加一个维度出来，原先的'维'，推到右边去
 ```clojure
 (np.expand_dims im :axis 0)
+
+(-> (np.array [1 2 3])
+    ;;(np.expand_dims  :axis 0) ;;=>array([[1, 2, 3]])
+    ;;(np.expand_dims  :axis 1) ;;=> array([[1], [2], [3]])
+    ;;(np.expand_dims :axis 2) ;;=> array([[1], [2], [3]])
+    (np.expand_dims :axis 3) ;; => array([[1], [2], [3]])
+    )
+
+(-> (np.array [[1 2 3] [4 5 6]])
+    ;;(np.expand_dims :axis 0) ;; array([[[1, 2, 3], [4, 5, 6]]])
+    ;;(np.expand_dims :axis 1) array([[[1, 2, 3], [4, 5, 6]]])
+    ;; (np.expand_dims :axis 2) ;;=> array([[[1] [2] [3]] [[4] [5] [6]]])
+    ;;(np.expand_dims :axis 3) ;;=> array([[[1] [2] [3]] [[4] [5] [6]]])
+    (np.expand_dims :axis 4) ;;=> array([[[1] [2] [3]] [[4] [5] [6]]])
+    )
+
 ```
 * squeeze
 ```clojure
