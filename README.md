@@ -341,17 +341,18 @@ test_labels ;;=> array([7, 2, 1, ..., 4, 5, 6], dtype=uint8)
             (.reshape 2 3)))
 ;;array([[0, 1, 2],
 ;;       [3, 4, 5]])
-
 (np.argmax a) ;;=>  5
 (np.argmax a :axis 0) ;列=> array([1, 1, 1])
 (np.argmax a :axis 1) ;行=> array([2, 2])
-
 (-> (np.arange 6)
     ((fn [b]
        (setv (get b 1) 5)
        b)) ;;=> array([0, 5, 2, 3, 4, 5])
     np.argmax) ;;=> 1
-
+```
+* negative 求相反数
+```clojure
+(np.negative [1. -1.]) ;;=> array([-1.,  1.])
 ```
 * expand_dims
 ```clojure
@@ -361,7 +362,27 @@ test_labels ;;=> array([7, 2, 1, ..., 4, 5, 6], dtype=uint8)
 ```clojure
 (np.squeeze out)
 ```
+* argsort大小排序的索引
+```clojure
+(-> [3 1 2]
+    np.array
+    np.argsort) ;;=> array([1, 2, 0])
+```
+* argpartition(arg*都是返回索引的): 找出第 k 大的数的位置，以及大于 k (排在k后面)和 小于 k (排在k前面)的数的位置
+```clojure
+(setv a (np.array [9 4 4 3 3 9 0 4 6 0]))
 
+(-> a
+    (np.argpartition 6)
+    ((fn [ids] (get a ids)))) ;;=> array([0, 0, 3, 3, 4, 4, 4, 9, 6, 9])
+
+;;Top5
+(-> a
+    (np.argpartition -5)
+    (get (slice -5 None))
+    ((fn [ids] (get a ids)))) ;;=> array([4, 4, 9, 6, 9])
+
+```
 ##### 夹角余弦Cosine
 
 ![](./cosine_similarity.svg)
