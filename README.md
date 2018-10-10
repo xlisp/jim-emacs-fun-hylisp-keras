@@ -319,6 +319,10 @@ test_labels ;;=> array([7, 2, 1, ..., 4, 5, 6], dtype=uint8)
 ;;         [[ 32,  56],
 ;;          [ 78,  64]]]])
 ```
+* uniform
+```clojure
+(np.random.uniform 0 1 (, 1 10 32 32))
+```
 * reshape张量编写
 ```clojure
 (. (train_images.reshape (, 60000 (* 28 28))) shape) ;;=> (60000, 784)
@@ -566,4 +570,38 @@ test_labels ;;=> array([7, 2, 1, ..., 4, 5, 6], dtype=uint8)
   decoder_model
   )
 
+```
+
+### Keras vs. PyTorch
+
+```clojure
+model = Sequential()
+model.add(Conv2D(32, (3, 3), activation='relu', input_shape=(32, 32, 3)))
+model.add(MaxPool2D())
+model.add(Conv2D(16, (3, 3), activation='relu'))
+model.add(MaxPool2D())
+model.add(Flatten())
+model.add(Dense(10, activation='softmax'))
+
+```
+
+```clojure
+class Net(nn.Module):
+    def __init__(self):
+        super(Net, self).__init__()
+    
+        self.conv1 = nn.Conv2d(3, 32, 3)
+        self.conv2 = nn.Conv2d(32, 16, 3)
+        self.fc1 = nn.Linear(16 * 6 * 6, 10) 
+        self.pool = nn.MaxPool2d(2, 2)
+        
+    def forward(self, x):
+        x = self.pool(F.relu(self.conv1(x)))
+        x = self.pool(F.relu(self.conv2(x)))
+        x = x.view(-1, 16 * 6 * 6)
+        x = F.log_softmax(self.fc1(x), dim=-1)
+
+        return x
+
+model = Net()
 ```
