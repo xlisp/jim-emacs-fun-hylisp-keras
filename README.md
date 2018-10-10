@@ -345,6 +345,17 @@ test_labels ;;=> array([7, 2, 1, ..., 4, 5, 6], dtype=uint8)
 ```clojure
 (np.squeeze out)
 ```
+##### 夹角余弦Cosine
+```clojure
+(setv vector1 (np.array [1 2 3])
+      vector2 (np.array [4 5 6]))
+
+(np.divide
+ (np.dot vector1 vector2)
+ (* (np.linalg.norm vector1) (np.linalg.norm vector2)))
+;;=> 0.97463184619707621
+
+```
 ##### 分布式表示最大的问题在于: 连接connect的问题,连接多个层的问题,充分利用各种细胞的简单优势计算
 * 就像你要获得pdf的C-g数据一样,不能像网页一样获得,但是pdf可以用苹果笔来写,网页却不能
 ```clojure
