@@ -399,6 +399,32 @@ test_labels ;;=> array([7, 2, 1, ..., 4, 5, 6], dtype=uint8)
     (get (slice -5 None))
     ((fn [ids] (get a ids)))) ;;=> array([4, 4, 9, 6, 9])
 ```
+* 数组拼接extend & append & concatenate
+```clojure
+(setv a (np.array [[1 2 3] [4 5 6]])
+      b (np.array [[11 21 31] [7 8 9]]))
+(np.concatenate (, a b) :axis 0)
+;;array([[ 1,  2,  3],
+;;       [ 4,  5,  6],
+;;       [11, 21, 31],
+;;       [ 7,  8,  9]])
+(np.concatenate (, a b) :axis 1)
+;;array([[ 1,  2,  3, 11, 21, 31],
+;;       [ 4,  5,  6,  7,  8,  9]])
+(np.concatenate (, a b) :axis 2) ;;IndexError: axis 2 out of bounds [0, 2)
+
+(np.append a b) ;;=> array([ 1,  2,  3,  4,  5,  6, 11, 21, 31,  7,  8,  9])
+(np.append a b :axis None) ;;=> array([ 1,  2,  3,  4,  5,  6, 11, 21, 31,  7,  8,  9])
+(np.append a b :axis 1)
+;;array([[ 1,  2,  3, 11, 21, 31],
+;;       [ 4,  5,  6,  7,  8,  9]])
+
+(setv list_a (list a)) ;;=> [array([1, 2, 3]), array([4, 5, 6])]
+(.extend
+ list_a
+ (list b)) ;;=> [array([1, 2, 3]), array([4, 5, 6]), array([11, 21, 31]), array([7, 8, 9])]
+
+```
 ##### 夹角余弦Cosine
 
 ![](./cosine_similarity.svg)
