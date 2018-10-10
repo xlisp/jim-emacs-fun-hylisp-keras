@@ -333,9 +333,25 @@ test_labels ;;=> array([7, 2, 1, ..., 4, 5, 6], dtype=uint8)
     (. shape))
 ;; (200, 300)
 ```
-* argmax
+* argmax沿轴axis最大值的索引
 ```clojure
 (np.argmax (model.predict im))
+
+(setv a (-> (np.arange 6)
+            (.reshape 2 3)))
+;;array([[0, 1, 2],
+;;       [3, 4, 5]])
+
+(np.argmax a) ;;=>  5
+(np.argmax a :axis 0) ;列=> array([1, 1, 1])
+(np.argmax a :axis 1) ;行=> array([2, 2])
+
+(-> (np.arange 6)
+    ((fn [b]
+       (setv (get b 1) 5)
+       b)) ;;=> array([0, 5, 2, 3, 4, 5])
+    np.argmax) ;;=> 1
+
 ```
 * expand_dims
 ```clojure
