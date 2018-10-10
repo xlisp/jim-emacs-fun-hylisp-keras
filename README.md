@@ -196,6 +196,10 @@ test_labels ;;=> array([7, 2, 1, ..., 4, 5, 6], dtype=uint8)
 (load_model "code_summary_seq2seq_model.h5")
 
 (model.load_weights weights_path)
+
+;; 
+(np.save "a.npy" (np.random.randint :low 90 :high 100 :size 10)) ;; 160B  a.npy
+(np.load "a.npy") ;;=> array([91, 92, 91, 95, 91, 90, 97, 91, 95, 94])
 ```
 
 ##### Dense softmax
@@ -333,6 +337,17 @@ test_labels ;;=> array([7, 2, 1, ..., 4, 5, 6], dtype=uint8)
     np.transpose
     (. shape))
 ;; (200, 300)
+```
+* empty
+```clojure
+(np.empty (, 3 2)) ;; 2维dim, 3列rows
+;;array([[  4.94065646e-324,   9.88131292e-324],
+;;       [  1.48219694e-323,   1.97626258e-323],
+;;       [  2.47032823e-323,   2.96439388e-323]])
+```
+* randint
+```clojure
+(np.random.randint :low 1 :high 100 :size 5) ;;=> array([90, 78, 17, 24, 81])
 ```
 * argmax沿轴axis最大值的索引
 ```clojure
