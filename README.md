@@ -574,7 +574,7 @@ test_labels ;;=> array([7, 2, 1, ..., 4, 5, 6], dtype=uint8)
 
 ### Keras vs. PyTorch
 
-```clojure
+```python
 model = Sequential()
 model.add(Conv2D(32, (3, 3), activation='relu', input_shape=(32, 32, 3)))
 model.add(MaxPool2D())
@@ -582,14 +582,12 @@ model.add(Conv2D(16, (3, 3), activation='relu'))
 model.add(MaxPool2D())
 model.add(Flatten())
 model.add(Dense(10, activation='softmax'))
-
 ```
 
-```clojure
+```python
 class Net(nn.Module):
     def __init__(self):
         super(Net, self).__init__()
-    
         self.conv1 = nn.Conv2d(3, 32, 3)
         self.conv2 = nn.Conv2d(32, 16, 3)
         self.fc1 = nn.Linear(16 * 6 * 6, 10) 
@@ -600,8 +598,6 @@ class Net(nn.Module):
         x = self.pool(F.relu(self.conv2(x)))
         x = x.view(-1, 16 * 6 * 6)
         x = F.log_softmax(self.fc1(x), dim=-1)
-
         return x
-
 model = Net()
 ```
