@@ -1,4 +1,7 @@
 # jim-emacs-fun-hylisp-keras 我的大脑从来不记忆公式,只是记忆书上不存在的Lisp,将哲学保存到每一个Lisp原子里面
+
+![](./SICP_and_DL.jpeg)
+
 * 从Hack计算代码到计算论文
 * 用函数式LISP来表达问题,问题变得清晰很多
 * 用李小龙和乔布斯的哲学推导吸引Hack计算代码: 首先你是个哲学家,然后才是一个Lisp程序员
