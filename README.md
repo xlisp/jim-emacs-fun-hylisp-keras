@@ -460,7 +460,7 @@ test_labels ;;=> array([7, 2, 1, ..., 4, 5, 6], dtype=uint8)
  (list b)) ;;=> [array([1, 2, 3]), array([4, 5, 6]), array([11, 21, 31]), array([7, 8, 9])]
 
 ```
-##### 夹角余弦Cosine
+##### 夹角余弦Cosine(损每一篇论文的所有公式和算法到本jim-emacs-fun)
 
 ![](./cosine_similarity.svg)
 
